@@ -29,25 +29,34 @@ function tableCreate() {
   body.appendChild(refreshbutton);
   refreshbutton.innerHTML='Reset';
   refreshbutton.addEventListener("click", refreshPage);
+  window.addEventListener("keydown", function(e) {
+		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+			e.preventDefault();
+		}
+	}, false);
 }
 function refreshPage(){
     window.location.reload();
 }
 function keyEvent(e) {
   var keyCode = e.keyCode;
+  
   if(keyCode==40) {
+	 
 	if(canMove(0,1)){  
 	  moveBifPushed(0,1);
 	  moveP(0,1);
 	}
   } 
   else if(keyCode==38){
+	  
 	if(canMove(0,-1)){  
 	  moveBifPushed(0,-1);
 	  moveP(0,-1);
 	}
   }
   else if(keyCode==37){
+	  
 	if(canMove(-1,0)){  
 	  moveBifPushed(-1,0);
 	  moveP(-1,0);
@@ -55,6 +64,7 @@ function keyEvent(e) {
    
   }
   else if(keyCode==39){
+	  
 	if(canMove(1,0)){  
 	  moveBifPushed(1,0);
 	  moveP(1,0);
