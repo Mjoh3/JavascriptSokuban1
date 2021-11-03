@@ -28,7 +28,7 @@ function tableCreate() {
   
   body.appendChild(refreshbutton);
   refreshbutton.innerHTML='Reset';
-  document.addEventListener("click", refreshPage);
+  refreshbutton.addEventListener("click", refreshPage);
 }
 function refreshPage(){
     window.location.reload();
