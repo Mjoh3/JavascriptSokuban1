@@ -3,7 +3,7 @@ var mymessage;
 function tableCreate() {
   const body = document.body;
   tbl = document.createElement('table');
-  tbl.style.width = '100px';
+  
   tbl.style.border = '1px solid black';
 
   for (let i = 0; i < tileMap01.height; i++) {
@@ -13,7 +13,7 @@ function tableCreate() {
         const td = tr.insertCell();
         td.appendChild(document.createTextNode(`${tileMap01.mapGrid[i][j][0]}`));
 		
-        td.style.border = '1px solid black';
+        
     }
   }
   body.appendChild(tbl);
@@ -29,6 +29,7 @@ function tableCreate() {
   body.appendChild(refreshbutton);
   refreshbutton.innerHTML='Reset';
   refreshbutton.addEventListener("click", refreshPage);
+  UpdateGraphics();
   window.addEventListener("keydown", function(e) {
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
 			e.preventDefault();
@@ -105,6 +106,7 @@ function moveP(x,y){
 		}
 	}
 	refillG();
+	UpdateGraphics();
 	if(UserHasCompletedGame()){
 		mymessage.style.color='green';
 		mymessage.innerHTML='You have completed the game, congratulations';
@@ -189,4 +191,45 @@ function UserHasCompletedGame(){
 		}     
     }}
 	return true;
+}
+function UpdateGraphics(){
+	for (let i = 0; i < tileMap01.height; i++) {
+    for (let j = 0; j < tileMap01.width; j++) {        
+        switch(tbl.rows[i].cells[j].innerHTML){
+			case 'P':
+				tbl.rows[i].cells[j].style.cssText=MyStyles[Entities.Character];
+				break;
+			case 'W':
+				tbl.rows[i].cells[j].style.cssText=MyStyles[Tiles.Wall];
+				break;
+			case 'B':
+				if(tileMap01.mapGrid[i][j][0]=='G'){
+					tbl.rows[i].cells[j].style.cssText=MyStyles[Entities.BlockDone];
+				}
+				else{
+					tbl.rows[i].cells[j].style.cssText=MyStyles[Entities.Block];
+				}
+				break;
+			case 'G':
+				tbl.rows[i].cells[j].style.cssText=MyStyles[Tiles.Goal];
+				break;
+			case '':
+				tbl.rows[i].cells[j].style.cssText=MyStyles[Tiles.Space];
+				break;
+			default:
+				break;
+		}
+		
+		
+    }
+	}
+}
+
+var MyStyles={
+	"tile-wall": "background-color: brown; ",
+	"tile-space": "background-color: white;", 
+	"tile-goal": "background-color: grey;", 
+	"entity-player": "background-color: blue;",
+	"entity-block": "background-color: orange;",
+	"entity-block-goal": "background-color: green;"	
 }
